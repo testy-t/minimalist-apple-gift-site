@@ -247,6 +247,15 @@ const Index = () => {
           </p>
         </div>
       </footer>
+
+      {/* Cart Sidebar */}
+      <CartSidebar
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        items={cartItems}
+        onRemoveItem={removeFromCart}
+        onUpdateQuantity={updateQuantity}
+      />
     </div>
   );
 };
