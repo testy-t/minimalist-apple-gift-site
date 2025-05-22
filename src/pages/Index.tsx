@@ -148,32 +148,28 @@ const Index = () => {
                 {card.popular && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                     <span className="bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-medium">
-                      Популярно
+                      Популярный
                     </span>
                   </div>
                 )}
-
-                <CardContent className="p-8 text-center">
-                  <div className="mb-6">
-                    <div className="w-24 h-16 mx-auto bg-gradient-to-br from-gray-800 to-gray-600 rounded-lg flex items-center justify-center mb-4">
-                      <span className="text-white text-2xl font-bold">🍎</span>
-                    </div>
+                <CardContent className="p-6 text-center">
+                  <div className="mb-4">
+                    <span className="text-3xl font-bold text-gray-900">
+                      {card.value.toLocaleString("ru-RU")} ₽
+                    </span>
                   </div>
-
-                  <h3 className="text-3xl font-bold text-gray-900 mb-2">
-                    {card.value.toLocaleString("ru-RU")} ₽
-                  </h3>
-
-                  <p className="text-gray-600 mb-6">Apple Gift Card</p>
-
+                  <div className="mb-6">
+                    <img
+                      src={card.image}
+                      alt={`Apple Gift Card ${card.value}₽`}
+                      className="w-full h-40 object-cover rounded-lg"
+                    />
+                  </div>
                   <Button
-                    className={`w-full rounded-full py-3 font-medium transition-all ${
-                      selectedCard === card.value
-                        ? "bg-blue-600 hover:bg-blue-700 text-white"
-                        : "bg-gray-100 hover:bg-gray-200 text-gray-900"
-                    }`}
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-full py-3"
+                    onClick={() => addToCart(card)}
                   >
-                    {selectedCard === card.value ? "Выбрано" : "Выбрать"}
+                    <Icon name="Plus" size={16} className="mr-2" />В корзину
                   </Button>
                 </CardContent>
               </Card>
