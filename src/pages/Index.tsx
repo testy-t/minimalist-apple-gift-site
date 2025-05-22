@@ -1,15 +1,59 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import CartSidebar from "@/components/CartSidebar";
+import Icon from "@/components/ui/icon";
+
+interface CartItem {
+  id: number;
+  value: number;
+  quantity: number;
+}
 
 const Index = () => {
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const giftCards = [
     { value: 1000, popular: false },
     { value: 2500, popular: true },
     { value: 5000, popular: false },
   ];
+
+  const addToCart = (value: number) => {
+    setCartItems((prev) => {
+      const existing = prev.find((item) => item.value === value);
+      if (existing) {
+        return prev.map((item) =>
+          item.value === value
+            ? { ...item, quantity: item.quantity + 1 }
+            : item,
+        );
+      }
+      return [...prev, { id: value, value, quantity: 1 }];
+    });
+    setSelectedCard(null);
+  };
+
+  const removeFromCart = (id: number) => {
+    setCartItems((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  const updateQuantity = (id: number, quantity: number) => {
+    if (quantity <= 0) {
+      removeFromCart(id);
+      return;
+    }
+    setCartItems((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, quantity } : item)),
+    );
+  };
+
+  const cartItemsCount = cartItems.reduce(
+    (sum, item) => sum + item.quantity,
+    0,
+  );
 
   return (
     <div className="min-h-screen bg-white">
@@ -42,8 +86,17 @@ const Index = () => {
                 </a>
               </div>
             </div>
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-6">
+            <Button
+              className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-6 relative"
+              onClick={() => setIsCartOpen(true)}
+            >
+              <Icon name="ShoppingCart" size={18} className="mr-2" />
               Корзина
+              {cartItemsCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  {cartItemsCount}
+                </span>
+              )}
             </Button>
           </div>
         </div>
