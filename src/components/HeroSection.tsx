@@ -11,7 +11,7 @@ const HeroSection = () => {
         </p>
         <div className="mb-16">
           <img
-            src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=800&h=400&fit=crop&crop=center"
+            src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=400&fit=crop&crop=center"
             alt="Apple Gift Cards"
             className="w-full max-w-2xl mx-auto rounded-3xl shadow-2xl"
           />
